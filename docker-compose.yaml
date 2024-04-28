@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+      - "587:587"
+    volumes:
+      - "./data/instance:/app/instance"
+    restart: unless-stopped
