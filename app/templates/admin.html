@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <h2>Admin Dashboard</h2>
+    <div id="userDataSection">
+        <h3 id="userIdView"></h3>
+        
+        <input type="email" id="emailInput" placeholder="New email">
+        <button onclick="updateEmail()">Change Email</button>
+        
+        <input type="password" id="passwordInput" placeholder="New password">
+        <button onclick="updatePassword()">Change Password</button>
+        
+        <button onclick="deleteAccount()">Delete Account</button>
+    </div>
+    <script>
+        const jwtCredentials = JSON.parse(sessionStorage.getItem('jwt_access_credentials'));
+        const jwtToken = jwtCredentials ? jwtCredentials['access_token'] : null;
+        const userId = jwtCredentials ? jwtCredentials['user_id'] : null;
+
+        function checkSignIn() {
+            if (!jwtToken || !userId) {
+                window.location.href = '/api/v1/admin/sign-in';
+                return;
+            }
+
+            fetch('/api/v1/sign-in/check', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + jwtToken
+                },
+                body: JSON.stringify({ user_id: userId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (!data.signed) {
+                    window.location.href = '/api/v1/admin/sign-in';
+                } else {
+                    alert('You are signed in!');
+                }
+            })
+            .catch(data => {
+                alert(data);
+                window.location.href = '/api/v1/admin/sign-in';
+            });
+        }
+
+        function addUserIdMessage(userId) {
+            var userIdView = document.getElementById("userIdView");
+            userIdView.textContent = "User id: " + userId;
+        }
+        
+        checkSignIn();
+        addUserIdMessage(userId);
+
+        function updateEmail() {
+            const newEmail = document.getElementById('emailInput').value;
+            fetch(`/api/v1/users/${userId}/email`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${jwtToken}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email: newEmail })
+            }).then(response => response.json())
+              .then(data => {
+                  alert(data.msg);
+              }).catch(error => {
+                  console.error('Error:', error);
+              });
+        }
+
+        function updatePassword() {
+            const newPassword = document.getElementById('passwordInput').value;
+            fetch(`/api/v1/users/${userId}/password`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${jwtToken}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ password: newPassword })
+            }).then(response => response.json())
+              .then(data => {
+                  alert(data.msg);
+              }).catch(error => {
+                  console.error('Error:', error);
+              });
+        }
+
+        function deleteAccount() {
+            fetch(`/api/v1/users/${userId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${jwtToken}`
+                }
+            }).then(response => response.json())
+              .then(data => {
+                  alert(data.msg);
+                  window.location.href = '/api/v1/admin/sign-in';
+              }).catch(error => {
+                  console.error('Error:', error);
+              });
+        }
+
+        function addUserIdMessage(userId) {
+            var userIdView = document.getElementById("userIdView");
+            userIdView.textContent = "User ID: " + userId;
+        }
+    </script>
+</body>
+</html>
