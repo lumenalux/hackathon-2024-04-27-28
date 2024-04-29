@@ -1,9 +1,14 @@
 from datetime import timedelta, datetime, timezone
 
-from flask import url_for
-from flask_jwt_extended import create_access_token, create_refresh_token
 from werkzeug.security import generate_password_hash
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
+from password_validator import PasswordValidator
+from email_validator import (
+    EmailNotValidError, validate_email as validate_email_
+)
+
+from flask import url_for
+from flask_jwt_extended import create_access_token, create_refresh_token
 
 from app.persistence.database import db
 from app.domain.user import EmailAuthenticationEntity, User
@@ -162,3 +167,25 @@ class EmailAuth:
 
 
 email_auth = EmailAuth(db)
+
+
+def validate_email(email):
+    try:
+        valid = validate_email_(email)
+        email = valid.email  # normalized form
+    except EmailNotValidError as e:
+        return False, str(e)
+    return True, ""
+
+
+password_schema = PasswordValidator()
+password_schema.min(8)
+password_schema.max(100)
+password_schema.has().uppercase()
+password_schema.has().lowercase()
+password_schema.has().digits()
+password_schema.has().symbols()
+
+
+def validate_password(password):
+    return password_schema.validate(password)

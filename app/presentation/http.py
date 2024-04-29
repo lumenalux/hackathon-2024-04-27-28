@@ -20,10 +20,12 @@ from flask_jwt_extended import (
 
 from app.persistence.smtp import send_confirm_url, send_reset_password_url
 from app.persistence.oauth2 import oauth2
-from app.application.auth.email import email_auth
 from app.application.auth.anonym import anonym_auth
 from app.application.auth.google import google_auth
 from app.application.user import delete_user as delete_user_entitie
+from app.application.auth.email import (
+    email_auth, validate_email, validate_password
+)
 
 
 api_v1 = Blueprint('api_v1', __name__)
@@ -66,6 +68,13 @@ def email_sign_up():
     password = request.json.get('password', None)
     if not email or not password:
         return jsonify(msg="Missing email or password"), 400
+
+    is_email_valid, error_message = validate_email(email)
+    if not is_email_valid:
+        return jsonify(msg=error_message), 400
+
+    if not validate_password(password):
+        return jsonify(msg="The password is too weak"), 400
 
     confirm_url, status_code = email_auth.register(email, password)
     if status_code == 400:
@@ -181,6 +190,9 @@ def update_password(id_hash):
     if not new_password:
         return jsonify(msg="Missing new password"), 400
 
+    if not validate_password(new_password):
+        return jsonify(msg="The password is too weak"), 400
+
     status_code = email_auth.update_password(id_hash, new_password)
     if status_code == 404:
         return jsonify(msg="User not found"), 404
@@ -198,6 +210,10 @@ def update_email(id_hash):
     new_email = request.json.get('email', None)
     if not new_email:
         return jsonify(msg="Missing email"), 400
+
+    is_email_valid, error_message = validate_email(new_email)
+    if not is_email_valid:
+        return jsonify(msg=error_message), 400
 
     status_code = email_auth.update_email(id_hash, new_email)
     if status_code == 404:
