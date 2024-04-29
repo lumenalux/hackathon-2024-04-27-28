@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_jwt_extended import JWTManager
+from flask_cors import CORS
 
 from app.config import Config
 from app.presentation.http import api_v1
@@ -8,6 +9,7 @@ from app.persistence.database import db, migrate
 from app.persistence.oauth2 import oauth2
 
 jwt = JWTManager()
+cors = CORS()
 
 
 def init_app():
@@ -24,7 +26,9 @@ def init_app():
         db.session.close()
 
     mail.init_app(app)
+
     jwt.init_app(app)
+    cors.init_app(app)
     oauth2.init_app(app)
 
     return app
