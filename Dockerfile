@@ -19,4 +19,4 @@ EXPOSE 5000 587
 
 VOLUME ["/app/instance"]
 
-CMD ["gunicorn", "-b", "0.0.0.0:5000", "run:app"]
+CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "run:app"]
