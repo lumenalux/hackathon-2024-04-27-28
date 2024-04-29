@@ -178,14 +178,21 @@ def validate_email(email):
     return True, ""
 
 
-password_schema = PasswordValidator()
-password_schema.min(8)
-password_schema.max(100)
-password_schema.has().uppercase()
-password_schema.has().lowercase()
-password_schema.has().digits()
-password_schema.has().symbols()
-
-
 def validate_password(password):
-    return password_schema.validate(password)
+    schema = PasswordValidator()
+    schema\
+        .min(8)\
+        .max(100)\
+        .has().uppercase()\
+        .has().lowercase()\
+        .has().digits()\
+        .has().symbols()\
+        .has().no().spaces()
+
+    password_message = (
+        "Password must be at least 8 characters long, "
+        "contain at least one uppercase letter, one lowercase letter, "
+        "one digit, and one symbol."
+    )
+
+    return schema.validate(password), password_message

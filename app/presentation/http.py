@@ -73,8 +73,9 @@ def email_sign_up():
     if not is_email_valid:
         return jsonify(msg=error_message), 400
 
-    if not validate_password(password):
-        return jsonify(msg="The password is too weak"), 400
+    is_password_valid, error_message = validate_password(password)
+    if not is_password_valid:
+        return jsonify(msg=error_message), 400
 
     confirm_url, status_code = email_auth.register(email, password)
     if status_code == 400:
@@ -190,8 +191,9 @@ def update_password(id_hash):
     if not new_password:
         return jsonify(msg="Missing new password"), 400
 
-    if not validate_password(new_password):
-        return jsonify(msg="The password is too weak"), 400
+    is_password_valid, error_message = validate_password(new_password)
+    if not is_password_valid:
+        return jsonify(msg=error_message), 400
 
     status_code = email_auth.update_password(id_hash, new_password)
     if status_code == 404:
