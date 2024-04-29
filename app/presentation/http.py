@@ -66,6 +66,8 @@ def sign_in_check():
 def email_sign_up():
     email = request.json.get('email', None)
     password = request.json.get('password', None)
+    sign_in_url = request.json.get('sign_in_url', None)
+
     if not email or not password:
         return jsonify(msg="Missing email or password"), 400
 
@@ -84,6 +86,9 @@ def email_sign_up():
     if status_code == 409:
         return jsonify(msg="Email already registered"), 409
 
+    if sign_in_url:
+        confirm_url += f"?sign_in_url={sign_in_url}"
+
     send_confirm_url(email, confirm_url)
 
     message = "User created. Please check your email to confirm registration."
@@ -92,10 +97,16 @@ def email_sign_up():
 
 @api_v1.route('/sign-up/email/verification/<token>', methods=['GET'])
 def email_verification(token):
+    sign_in_url = request.args.get('sign_in_url', None)
     status_code = email_auth.confirm_email(token)
     if status_code == 400:
         return render_template('confirmation.html', success=False)
-    return render_template('confirmation.html', success=True)
+
+    return render_template(
+        'confirmation.html',
+        success=True,
+        sign_in_url=sign_in_url
+    )
 
 
 @api_v1.route('/email/password/forgot', methods=['POST'])
@@ -197,7 +208,7 @@ def update_password(id_hash):
 
     status_code = email_auth.update_password(id_hash, new_password)
     if status_code == 404:
-        return jsonify(msg="User not found"), 404
+        return jsonify(msg="User does not have the email authentication"), 404
 
     return jsonify(msg="Password updated"), 200
 
@@ -219,7 +230,7 @@ def update_email(id_hash):
 
     status_code = email_auth.update_email(id_hash, new_email)
     if status_code == 404:
-        return jsonify(msg="User not found"), 404
+        return jsonify(msg="User does not have the email authentication"), 404
 
     return jsonify(msg="Email updated"), 200
 
@@ -260,3 +271,8 @@ def admin():
 @api_v1.route('/admin/sign-in', methods=['GET'])
 def admin_sign_in():
     return render_template('admin_sign_in.html')
+
+
+@api_v1.route('/admin/sign-up', methods=['GET'])
+def admin_sign_up():
+    return render_template('admin_sign_up.html')
