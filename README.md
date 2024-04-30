@@ -1,4 +1,4 @@
-# Auth API for Hackathon 27-28 04 2024
+# Auth API for Hackathon 27-28 04 2024. Team: БОМЖЇ
 
 ![thumbnail](docs/images/thumbnail.jpg)
 
