@@ -1,15 +1,10 @@
 from flask import Flask
-from flask_jwt_extended import JWTManager
-from flask_cors import CORS
 
 from app.config import Config
-from app.presentation.http import api_v1
+from app.presentation.http import api_v1, jwt, cors
 from app.persistence.smtp import mail
 from app.persistence.database import db, migrate
 from app.persistence.oauth2 import oauth2
-
-jwt = JWTManager()
-cors = CORS()
 
 
 def init_app():

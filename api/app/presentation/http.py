@@ -12,14 +12,18 @@ from flask import (
     render_template
 )
 
+from flask_cors import CORS
 from flask_jwt_extended import (
     get_jwt_identity,
     jwt_required,
-    create_access_token
+    create_access_token,
+    get_jwt,
+    JWTManager
 )
 
 from app.persistence.smtp import send_confirm_url, send_reset_password_url
 from app.persistence.oauth2 import oauth2
+from app.application.jwt import add_token_to_blocklist, is_token_blocklisted
 from app.application.auth.anonym import anonym_auth
 from app.application.auth.google import google_auth
 from app.application.user import delete_user as delete_user_entitie
@@ -27,7 +31,8 @@ from app.application.auth.email import (
     email_auth, validate_email, validate_password
 )
 
-
+jwt = JWTManager()
+cors = CORS()
 api_v1 = Blueprint('api_v1', __name__)
 
 
@@ -107,6 +112,19 @@ def email_verification(token):
         success=True,
         sign_in_url=sign_in_url
     )
+
+
+@api_v1.route("/sign-out", methods=["DELETE"])
+@jwt_required()
+def modify_token():
+    add_token_to_blocklist(get_jwt()["jti"])
+    return jsonify(msg="JWT revoked")
+
+
+@jwt.token_in_blocklist_loader
+def check_if_token_revoked(jwt_header, jwt_payload: dict) -> bool:
+    jti = jwt_payload["jti"]
+    return is_token_blocklisted(jti)
 
 
 @api_v1.route('/email/password/forgot', methods=['POST'])
