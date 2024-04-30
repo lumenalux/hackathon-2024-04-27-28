@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Anonymous Chat</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .message-box {
+            min-width: 300px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+        @media (min-width: 768px) {
+            .chat-container {
+                max-width: 700px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex justify-center">
+    <div class="chat-container flex flex-col h-screen w-full md:max-w-2xl">
+        <div id="messages" class="flex-1 flex flex-col space-y-2 p-2">
+            <!-- Messages will be appended here -->
+        </div>
+        <div class="p-2 pb-6">
+            <form id="form" class="flex">
+                <input id="input" autocomplete="off" placeholder="Type a message..." class="flex-1 p-2 rounded-l-lg border-gray-300" />
+                <button class="bg-blue-500 hover:bg-blue-700 text-white p-2 px-4 rounded-r-lg">Send</button>
+            </form>
+        </div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const userId = sessionStorage.getItem('userId');
+        const token = sessionStorage.getItem('token');
+
+        let socket = io();
+        let config;
+
+        window.onload = function() {
+            fetch('/config')
+            .then(response => response.json())
+            .then(data => {
+                config = data;
+                checkToken();
+                document.getElementById('form').addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    if (input.value) {
+                        socket.emit('chat message', { text: input.value, user: userId.slice(0, 8) });
+                        input.value = '';
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('Error loading configuration:', error);
+            });
+
+            console.log('Load messages');
+            socket.on('load messages', (messages) => {
+                console.log('Load message event');
+                messages.forEach(msg => addMessage(msg));
+            });
+
+            socket.on('chat message', (msg) => {
+                addMessage(msg);
+            });
+        };
+
+        function checkToken() {
+            if (!token) {
+                window.location.href = '/sign-in';
+                return;
+            }
+
+            fetch(`${config.apiBaseUrl}/sign-in/check`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ "user_id": userId })
+            })
+            .then(response => {
+                if (response.status !== 200) {
+                    window.location.href = '/sign-in';
+                    return;
+                }
+            });
+        }
+
+        function addMessage(msg) {
+            let messageContainer = document.createElement('div');
+            messageContainer.classList.add('bg-white', 'rounded-lg', 'p-2', 'shadow', 'message-box', 'self-start');
+
+            let timeStamp = document.createElement('span');
+            timeStamp.textContent = new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit'});
+            timeStamp.classList.add('text-xs', 'text-gray-600', 'block');
+
+            let userName = document.createElement('div');
+            userName.textContent = msg.user;
+            userName.classList.add('font-bold', 'text-gray-900');
+
+            let textContent = document.createElement('div');
+            textContent.textContent = msg.text;
+            textContent.classList.add('text-gray-800', 'bg-gray-100', 'p-1', 'rounded');
+
+            messageContainer.appendChild(timeStamp);
+            messageContainer.appendChild(userName);
+            messageContainer.appendChild(textContent);
+
+            document.getElementById('messages').appendChild(messageContainer);
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+    </script>
+</body>
+</html>
