@@ -1,0 +1,382 @@
+openapi: 3.0.0
+info:
+  title: Auth API
+  description: API for handling user authentication including sign-in, sign-up, password reset, and Google OAuth.
+  version: 1.0.0
+servers:
+  - url: http://localhost:5000/api/v1
+    description: Production server
+
+paths:
+  /sign-in/email:
+    post:
+      summary: Sign in user with email and password
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        200:
+          description: Successful sign in
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user_id:
+                    type: string
+                  access_token:
+                    type: string
+                  refresh_token:
+                    type: string
+                  expires_at:
+                    type: string
+                    format: date-time
+        401:
+          description: Bad email or password
+
+  /sign-in/check:
+    post:
+      summary: Check if user is signed in with a valid JWT token
+      security:
+        - jwt: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: string
+      responses:
+        200:
+          description: User is signed in
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  signed:
+                    type: boolean
+        400:
+          description: Missing user_id in request body
+        401:
+          description: Unauthorized
+
+  /sign-up/email:
+    post:
+      summary: Sign up a new user with email and password
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+                sign_in_url:
+                  type: string (optional)
+      responses:
+        201:
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        400:
+          description: Missing email or password
+
+  /sign-up/email/verification/{token}:
+    get:
+      summary: Verify user email after signup
+      parameters:
+        - name: token
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Email verification successful (redirect to sign in page)
+        400:
+          description: Invalid verification token
+
+  /sign-out:
+    delete:
+      summary: Revoke user's JWT token (log out)
+      security:
+        - jwt: []
+      responses:
+        200:
+          description: JWT revoked
+
+  /email/password/forgot:
+    post:
+      summary: Request password reset for a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+      responses:
+        200:
+          description: Password reset email sent
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        404:
+          description: Email not found
+
+  /email/password/reset/{token}:
+    post:
+      summary: Reset user's password
+      parameters:
+        - name: token
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+      responses:
+        200:
+          description: Password reset successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        400:
+          description: Missing new password or invalid reset token
+  /sign-up/anonym:
+    post:
+      summary: Sign up a new anonymous user
+      responses:
+        201:
+          description: Anonymous user created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user_id:
+                    type: string
+                  access_token:
+                    type: string
+                  refresh_token:
+                    type: string
+                  expires_at:
+                    type: string
+                    format: date-time
+
+  /sign-up/google:
+    get:
+      summary: Initiate Google sign up flow
+      responses:
+        302:
+          description: Redirected to Google authorization page
+
+  /sign-up/google/auth:
+    get:
+      summary: Callback after Google sign up authorization
+      responses:
+        302:
+          description: Redirected back to the application with JWT credentials (in session)
+
+  /one-time/credentials:
+    get:
+      summary: Retrieve one-time JWT credentials from session (after Google sign up)
+      responses:
+        200:
+          description: JWT credentials retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                  refresh_token:
+                    type: string
+                  user_id:
+                    type: string
+                  expires_at:
+                    type: string
+                    format: date-time
+        404:
+          description: No JWT credentials found in session
+
+  /one-time/credentials/page:
+    get:
+      summary: Page to display after retrieving one-time JWT credentials
+
+  /users/{id_hash}/password:
+    put:
+      summary: Update user's password
+      security:
+        - jwt: []
+      parameters:
+        - name: id_hash
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+      responses:
+        200:
+          description: Password updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        400:
+          description: Missing new password or invalid password format
+        401:
+          description: Unauthorized (user ID in JWT doesn't match requested user)
+        404:
+          description: User does not have email authentication set up
+
+  /users/{id_hash}/email:
+    put:
+      summary: Update user's email
+      security:
+        - jwt: []
+      parameters:
+        - name: id_hash
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+      responses:
+        200:
+          description: Email updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        400:
+          description: Missing new email or invalid email format
+        401:
+          description: Unauthorized (user ID in JWT doesn't match requested user)
+        404:
+          description: User does not have email authentication set up
+
+  /users/{id_hash}:
+    delete:
+      summary: Delete a user
+      security:
+        - jwt: []
+      parameters:
+        - name: id_hash
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: User deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+        404:
+          description: User not found
+
+  /refresh:
+    post:
+      summary: Refresh a JWT access token. Only refresh tokens are allowed for this endpoint
+      security:
+        - jwt: [refresh]
+      responses:
+        200:
+          description: New access token generated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+            access_token:
+              type: string
+            expires_at:
+              type: string
+              format: date-time
+        401:
+          description: Unauthorized (invalid or expired refresh token)
+
+  /admin:
+    get:
+      summary: Admin panel page (protected)
+      responses:
+        200:
+          description: Admin panel
+
+  /admin/sign-in:
+    get:
+      summary: Sign in page for admin access
+      responses:
+        200:
+          description: Admin sign in form
+
+  /admin/sign-up:
+    get:
+      summary: Sign up page for admin access
+      responses:
+        200:
+          description: Admin sign up form
