@@ -1,5 +1,7 @@
 # Auth API for Hackathon 27-28 04 2024
 
+![thumbnail](docs/images/thumbnail.jpg)
+
 ## About
 
 This project, developed by the team БОМЖЇ (Stefan Martynyuk, Kyrylo Mostovyi, and Artem Lebedenko). The API supports user registration and authentication through various methods, including email, Google accounts. It also provides an admin panel for managing user accounts and API endpoints for integration with other services. We have also developed a demo of anonymous messaging application that enables users to communicate anonymously while maintaining a secure and reliable platform using our API.
@@ -134,4 +136,5 @@ Sure, here's the description with HTTP methods for the endpoints:
 The API uses JSON Web Tokens (JWT) for authentication and authorization. The requests include headers like `Authorization` with a Bearer token for authenticated routes.
 
 For more detailed information on the API endpoints, request/response formats, and other specifications, please refer to the provided [auth_API_v1_openapi_schema.yaml](docs/auth_API_v1_openapi_schema.yaml) file, which contain the OpenAPI specification for Auth API.
+
 
