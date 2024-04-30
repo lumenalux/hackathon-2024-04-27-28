@@ -35,7 +35,9 @@ Before you begin, ensure you have the following installed on your computer:
 
 2. **Configure Environment Variables**: The application requires setting up environment variables for various services including the database, mail server, and Google OAuth2. Rename the `.env.example` file to `.env` and edit it with your actual credentials.
 
-    `mv .env.example .env`
+    ```bash
+    mv .env.example .env
+    ```
 
     Open the `.env` file and update the following keys with your actual data:
 
