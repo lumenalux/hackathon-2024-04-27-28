@@ -16,7 +16,11 @@ class User(db.Model):
                         nullable=False, index=True)
 
     authentication = db.relationship(
-        'IAuthenticationEntity', back_populates='user', uselist=False)
+        'IAuthenticationEntity',
+        back_populates='user',
+        uselist=False,
+        cascade='delete'
+    )
 
     @hybrid_property
     def id_hash(self):  # noqa
