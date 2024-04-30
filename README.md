@@ -162,3 +162,19 @@ For more detailed information on the API endpoints, request/response formats, an
 ![sign up with google](docs/images/admin-sign-up-with-google.jpg)
 ![google authorization page](docs/images/google-authorization-page.jpg)
 ![signed in with the new user id](docs/images/admin-dashboard-with-the-new-user-id.jpg)
+
+## Anonym Chat Usage Example
+
+### Email Verification for Chat
+![chat email verification](docs/images/chat-email-verification-page.jpg)
+![chat sign up verification email](docs/images/chat-sign-up-email-verifiaction-email.jpg)
+
+### Sign In to Chat
+![chat sign in](docs/images/chat-sign-in-page.jpg)
+
+### Sign Up for Chat
+![chat sign up page](docs/images/chat-sign-up.jpg)
+![chat sign up message](docs/images/chat-sign-up-message.jpg)
+
+### Manage Multiple Chat Sessions
+![chat with different users](docs/images/chat-with-different-users-simultaneously.jpg)
