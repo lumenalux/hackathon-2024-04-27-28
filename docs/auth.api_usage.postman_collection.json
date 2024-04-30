@@ -1,0 +1,586 @@
+{
+	"info": {
+		"_postman_id": "93dd6a2f-b745-45ea-98cb-285788ecb8f9",
+		"name": "auth.api usage",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22479828"
+	},
+	"item": [
+		{
+			"name": "api/v1/sign-up/email",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"stefanmartinuk@gmail.com\",\r\n    \"password\": \"test1234567\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/api/v1/sign-up/email",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"sign-up",
+						"email"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "test",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "test",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/v1/sign-in/email",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"stefanmartinuk@gmail.com\",\r\n    \"password\": \"newpassword1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/api/v1/sign-in/email",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"sign-in",
+						"email"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "test",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "test",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/v1/users/{id_hash}/password",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcxNDMxMTE2NCwianRpIjoiMjY1YjRhNzAtMzMzMC00ODliLWEyN2UtZmJlN2JkZmVkZGIyIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImQ0NzM1ZTNhMjY1ZTE2ZWVlMDNmNTk3MThiOWI1ZDAzMDE5YzA3ZDhiNmM1MWY5MGRhM2E2NjZlZWMxM2FiMzUiLCJuYmYiOjE3MTQzMTExNjQsImNzcmYiOiIxNTc4MmUxZS1hYTBkLTQ5ODMtOWFkNi01Y2ViNWY2MGI2MjIiLCJleHAiOjE3MTQzMTQ3NjR9.lV2-DNfJfoGnPpGvc-nGHGCYTKTJu_XyCMZjsf_dvNs",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"password\": \"testtest1234567\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/api/v1/users/d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35/password",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
+						"password"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "test",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "test",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/v1/users/{id_hash}/email",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcxNDMxMTIzNiwianRpIjoiOTFkNjVjZjAtNGM0Mi00N2ZjLTg0MmYtYjZiYTJhMDQwMzVlIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImQ0NzM1ZTNhMjY1ZTE2ZWVlMDNmNTk3MThiOWI1ZDAzMDE5YzA3ZDhiNmM1MWY5MGRhM2E2NjZlZWMxM2FiMzUiLCJuYmYiOjE3MTQzMTEyMzYsImNzcmYiOiI2Nzk4NWNiMS03OTY3LTQxOTQtODM0OS02NWY1ZDRlOGIyOGMiLCJleHAiOjE3MTQzMTQ4MzZ9.pLsyMZy-l0SiK26EDrMG0kULeOXXKtDFRzFddYPleWI",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"stefanmartinuk@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/api/v1/users/d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35/email",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
+						"email"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "test",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "test",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/v1/email/password/forgot",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"stefanmartinuk@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/api/v1/email/password/forgot",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"email",
+						"password",
+						"forgot"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "test",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "test",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/v1/email/password/reset",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"password\": \"newpassword1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/api/v1/email/password/reset/InN0ZWZhbm1hcnRpbnVrQGdtYWlsLmNvbSI.Zi5Q2w.MqRt-nNgA6d5Z26rz-D0skSkOAA",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"email",
+						"password",
+						"reset",
+						"InN0ZWZhbm1hcnRpbnVrQGdtYWlsLmNvbSI.Zi5Q2w.MqRt-nNgA6d5Z26rz-D0skSkOAA"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "test",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "test",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/v1/sign-up/anonym",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"nesijok439@idsho.com\",\r\n    \"password\": \"test1234567\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/api/v1/sign-up/anonym",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"sign-up",
+						"anonym"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "test",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "test",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/v1/sign-in/check",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcxNDQ0OTQyNCwianRpIjoiYWE0NTU4ZWQtYmQxNy00Y2MyLTk4ZGEtNGVhYWMxNGNlMDdlIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImNiMWI5ZDkxLWQ1MjAtNGQxMC1hZGI4LTQyMDAyNjhkYWNiNSIsIm5iZiI6MTcxNDQ0OTQyNCwiY3NyZiI6ImQyM2RiY2Y2LWU4Y2YtNGE1NC1hMmFjLTlhNGJlMDAxMGE1OSIsImV4cCI6MTcxNDQ1MzAyNH0.BDfZz4SLuDAYXlPMBQNQPXKWrEndJR0YlVkRrMNTePg",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"stefanmartinuk@gmail.com\",\r\n    \"password\": \"newpassword1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/api/v1/sign-in/check",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"sign-in",
+						"check"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "test",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "test",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/v1/refresh",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcxNDMxMTQ0NCwianRpIjoiOTI2MTkxMTMtMjMxMS00OWU0LThmYWQtNTFiMTNmMmM4ODQ4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjRiZjQyYmNlLTcxOTItNDVmNy04YmJmLWZiYTI4M2I4MWNkYyIsIm5iZiI6MTcxNDMxMTQ0NCwiY3NyZiI6IjRkNmEwY2QyLDQxMzItNDY3Yi05YTY1LWYzODQxMWQ4YWUzYiIsImV4cCI6MTcxNDMxNTA0NH0.dGMR-JhZ4KlWeGRZqXefiR6CEm_hTkbETq1prX80Mmo",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"nesijok439@idsho.com\",\r\n    \"password\": \"test1234567\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/api/v1/refresh",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"refresh"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "test",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "test",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/v1/sign-out",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcxNDQ0OTQyNCwianRpIjoiYWE0NTU4ZWQtYmQxNy00Y2MyLTk4ZGEtNGVhYWMxNGNlMDdlIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImNiMWI5ZDkxLWQ1MjAtNGQxMC1hZGI4LTQyMDAyNjhkYWNiNSIsIm5iZiI6MTcxNDQ0OTQyNCwiY3NyZiI6ImQyM2RiY2Y2LWU4Y2YtNGE1NC1hMmFjLTlhNGJlMDAxMGE1OSIsImV4cCI6MTcxNDQ1MzAyNH0.BDfZz4SLuDAYXlPMBQNQPXKWrEndJR0YlVkRrMNTePg",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"nesijok439@idsho.com\",\r\n    \"password\": \"test1234567\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/api/v1/sign-out",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"sign-out"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "test",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "test",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/v1/user/{id_hash}",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcxNDMxMTQzMSwianRpIjoiYTBlNWRhZTMtMGM2OC00MDllLWEzOGUtMGQzMjhkMjFjYWQ2IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImQ0NzM1ZTNhMjY1ZTE2ZWVlMDNmNTk3MThiOWI1ZDAzMDE5YzA3ZDhiNmM1MWY5MGRhM2E2NjZlZWMxM2FiMzUiLCJuYmYiOjE3MTQzMTE0MzEsImNzcmYiOiJiODQ2NDM0OC04NDE5LTRjODQtYmVmNy1mNTBlOGRiMWU5YzgiLCJleHAiOjE3MTQzMTUwMzF9.ysI7zm6eSk1NvyToAMyvhTcxUFObejl8oeN1A0OoZZA",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/api/v1/users/d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "test",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "test",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/v1/sign-up/google",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/api/v1/sign-up/google?redirect_url=https://monkeytype.com/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"sign-up",
+						"google"
+					],
+					"query": [
+						{
+							"key": "redirect_url",
+							"value": "https://monkeytype.com/"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
