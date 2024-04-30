@@ -137,4 +137,28 @@ The API uses JSON Web Tokens (JWT) for authentication and authorization. The req
 
 For more detailed information on the API endpoints, request/response formats, and other specifications, please refer to the provided [auth_API_v1_openapi_schema.yaml](docs/auth_API_v1_openapi_schema.yaml) file, which contain the OpenAPI specification for Auth API.
 
+## Auth API Admin Page Usage Example 
 
+### Sign Up Email
+![sign up email](docs/images/admin-sign-up-email.jpg)
+![sign up email message](docs/images/admin-sign-up-email-message.jpg)
+**Verification**
+![sign up verification on email](docs/images/email-verification-on-gmail.jpg)
+![sign up verification page](docs/images/email-verification-page.jpg)
+
+**Sign In to Admin dashboard**
+![admin dashboard](docs/images/admin-sign-in-page.jpg)
+![admin dashboard](docs/images/admin-dashboard.jpg)
+
+### Manage user data
+**By moving moves on the User Id you can simply copy it by click**
+![admin copy user link](docs/images/copy-user-id-by-click.jpg)
+**From Admin you can change the email and password in simple two clicks**
+![admin copy user link](docs/images/admin-change-email.jpg)
+**Lastly, you can delete the user account**
+![delete account](docs/images/admin-delete-account.jpg)
+
+### Sign Up with Google
+![sign up with google](docs/images/admin-sign-up-with-google.jpg)
+![google authorization page](docs/images/google-authorization-page.jpg)
+![signed in with the new user id](docs/images/admin-dashboard-with-the-new-user-id.jpg)
