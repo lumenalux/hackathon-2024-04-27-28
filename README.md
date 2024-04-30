@@ -2,6 +2,28 @@
 
 ![thumbnail](docs/images/thumbnail.jpg)
 
+## Contents
+
+1. [About](#about)
+2. [Installation](#installation)
+   - [Prerequisites](#prerequisites)
+   - [Clone the repository](#clone-the-repository)
+   - [Configuration](#configuration)
+3. [Running the Application](#running-the-application)
+4. [Verifying the Installation](#verifying-the-installation)
+5. [Additional Information](#additional-information)
+6. [Auth API Functionality](#auth-api-functionality)
+7. [Auth API Admin Page Usage Example](#auth-api-admin-page-usage-example)
+   - [Sign Up Email](#sign-up-email)
+   - [Manage user data](#manage-user-data)
+   - [Sign Up with Google](#sign-up-with-google)
+8. [Anonym Chat Usage Example](#anonym-chat-usage-example)
+   - [Sign Up for Chat](#sign-up-for-chat)
+   - [Email Verification for Chat](#email-verification-for-chat)
+   - [Sign In to Chat](#sign-in-to-chat)
+   - [Manage Multiple Chat Sessions](#manage-multiple-chat-sessions)
+
+
 ## About
 
 This project, developed by the team БОМЖЇ (Stefan Martynyuk, Kyrylo Mostovyi, and Artem Lebedenko). The API supports user registration and authentication through various methods, including email, Google accounts. It also provides an admin panel for managing user accounts and API endpoints for integration with other services. We have also developed a demo of anonymous messaging application that enables users to communicate anonymously while maintaining a secure and reliable platform using our API.
